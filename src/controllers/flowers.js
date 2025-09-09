@@ -21,12 +21,12 @@ export const getAllFlowersController = async (req, res, next) => {
 };
 
 export const getStoreFlowersController = async (req, res, next) => {
-  const { storeId } = req;
+  const { shopId } = req.params;
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams(req.query);
 
   const data = await getAllFlowers({
-    storeId,
+    shopId,
     page,
     perPage,
     sortBy,
