@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const ShopSchema = new Schema({
   name: {
@@ -7,4 +7,7 @@ const ShopSchema = new Schema({
   },
   address: { type: String, required: true },
   phone: { type: String },
+  logo: { type: String, required: true },
 });
+
+export const Shop = model('Shop', ShopSchema);
