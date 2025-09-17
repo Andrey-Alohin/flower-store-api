@@ -2,6 +2,10 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.get('/');
+router.get('/', (req, res, next) => {
+  res.status(200).json({
+    message: 'order get',
+  });
+});
 
 export default router;
