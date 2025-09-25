@@ -13,7 +13,8 @@ export const getAllFlowers = async ({ page, perPage, sortBy, sortOrder }) => {
     flowerQuery
       .sort({ inStock: -1, [sortBy]: sortOrder })
       .skip(skip)
-      .limit(perPage),
+      .limit(perPage)
+      .populate('shopId'),
   ]);
 
   const paginationData = calculatePaginationData(total, page, perPage);
@@ -35,7 +36,7 @@ export const getAllShopFlowers = async ({
   const totalQuery = flowerQuery.clone();
 
   const [total, data] = await Promise.all([
-    totalQuery.countDocuments,
+    totalQuery.countDocuments(),
     flowerQuery
       .sort({ [sortBy]: sortOrder })
       .skip(skip)

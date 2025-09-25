@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { FlowersColection } from '../db/models/flower';
+import { FlowersColection } from '../db/models/flower.js';
 import createHttpError from 'http-errors';
-import { OrdersColection } from '../db/models/order';
+import { OrdersColection } from '../db/models/order.js';
 
 export const createNewOrder = async (newOrder) => {
   const session = await mongoose.startSession();
@@ -14,7 +14,6 @@ export const createNewOrder = async (newOrder) => {
         { $inc: { countAvailable: -item.count } },
         { session, new: true },
       );
-      item.price = updatedFlower.price;
       if (!updatedFlower || updatedFlower.shopId !== newOrder.shopId) {
         throw createHttpError(
           400,
@@ -24,6 +23,7 @@ export const createNewOrder = async (newOrder) => {
           },
         );
       }
+      item.price = updatedFlower.price;
     }
 
     const confirmOrder = await OrdersColection.create([newOrder], { session });

@@ -2,7 +2,7 @@ import { model, Schema, Types } from 'mongoose';
 
 const FlowerSchema = new Schema(
   {
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
     type: {
       type: String,
       enum: ['flower', 'bouquet'],

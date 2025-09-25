@@ -1,4 +1,4 @@
-import { createNewOrder } from '../services/order';
+import { createNewOrder } from '../services/order.js';
 
 export const createOrderController = async (req, res, next) => {
   const { body } = req;
