@@ -22,6 +22,7 @@ const FlowerSchema = new Schema(
       min: 0,
       default: 0,
     },
+    inStock: { type: Boolean, default: true, required: true },
     ingredients: {
       type: [
         {
@@ -37,4 +38,14 @@ const FlowerSchema = new Schema(
   { timestamps: true },
 );
 
-export const Flower = model('Flower', FlowerSchema);
+FlowerSchema.pre('save', function (next) {
+  this.inStock = this.countAvailable > 0;
+  next();
+});
+
+FlowerSchema.pre('findOneAndUpdate', function (next) {
+  this.inStock = this.countAvailable > 0;
+  next();
+});
+
+export const FlowersColection = model('Flower', FlowerSchema);

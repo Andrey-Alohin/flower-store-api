@@ -10,4 +10,4 @@ const ShopSchema = new Schema({
   logo: { type: String, required: true },
 });
 
-export const Shop = model('Shop', ShopSchema);
+export const ShopColection = model('Shop', ShopSchema);

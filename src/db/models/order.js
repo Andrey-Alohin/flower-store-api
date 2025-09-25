@@ -2,6 +2,7 @@ import { model, Schema, Types } from 'mongoose';
 
 const OrderSchema = new Schema(
   {
+    shopID: { type: Types.ObjectId, ref: 'Shop', required: true },
     userInfo: {
       name: { type: String, required: true, trim: true },
       phoneNumber: { type: String, required: true, trim: true },
@@ -55,4 +56,4 @@ OrderSchema.set('toJSON', {
   },
 });
 
-export const Order = model('Order', OrderSchema);
+export const OrdersColection = model('Order', OrderSchema);

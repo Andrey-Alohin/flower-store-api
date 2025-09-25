@@ -1,4 +1,4 @@
-import { Shop } from '../db/models/shop.js';
+import { ShopColection } from '../db/models/shop.js';
 import { getAllFlowers, getAllShopFlowers } from '../services/flower.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
@@ -28,7 +28,7 @@ export const getShopFlowersController = async (req, res, next) => {
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams(req.query);
 
-  shopNotFound(await Shop.findById(shopId));
+  shopNotFound(await ShopColection.findById(shopId));
 
   const data = await getAllShopFlowers({
     shopId,
