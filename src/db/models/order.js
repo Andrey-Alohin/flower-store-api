@@ -2,7 +2,7 @@ import { model, Schema, Types } from 'mongoose';
 
 const OrderSchema = new Schema(
   {
-    shopID: { type: Types.ObjectId, ref: 'Shop', required: true },
+    shopId: { type: Types.ObjectId, ref: 'Shop', required: true },
     userInfo: {
       name: { type: String, required: true, trim: true },
       phoneNumber: { type: String, required: true, trim: true },
@@ -36,14 +36,6 @@ const OrderSchema = new Schema(
   },
   { timestamps: true },
 );
-
-OrderSchema.pre('save', function (next) {
-  this.orderTotal = this.order.reduce(
-    (sum, item) => sum + item.count * item.price,
-    0,
-  );
-  next();
-});
 
 OrderSchema.set('toJSON', {
   transform: (doc, ret) => {

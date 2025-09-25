@@ -10,9 +10,15 @@ const objectId = () =>
   }, 'ObjectId validation');
 
 export const createOrderSchema = Joi.object({
-  name: Joi.string().min(2).max(20).required(),
-  phoneNumber: Joi.string().min(10).max(14).required(),
-  email: Joi.string().email().required(),
+  shopId: objectId().required().messages({
+    'any.invalid': 'shopId must be a valid MongoDB ObjectId',
+    'any.required': 'shopId is required',
+  }),
+  userInfo: Joi.object({
+    name: Joi.string().min(2).max(20).required(),
+    phoneNumber: Joi.string().min(10).max(14).required(),
+    email: Joi.string().email().required(),
+  }).required(),
   deliveryAddress: Joi.string().min(10).max(50).required(),
   order: Joi.array()
     .items(

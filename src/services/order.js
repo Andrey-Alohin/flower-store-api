@@ -10,11 +10,16 @@ export const createNewOrder = async (newOrder) => {
     const { order } = newOrder;
     for (const item of order) {
       const updatedFlower = await FlowersColection.findOneAndUpdate(
-        { _id: item.id, countAvailable: { $gte: item.count } },
+        {
+          _id: item.id,
+          shopId: newOrder.shopId,
+          countAvailable: { $gte: item.count },
+        },
         { $inc: { countAvailable: -item.count } },
         { session, new: true },
       );
-      if (!updatedFlower || updatedFlower.shopId !== newOrder.shopId) {
+
+      if (!updatedFlower) {
         throw createHttpError(
           400,
           `Flower with id ${item.id}, not enough stock or wrong shop`,
@@ -25,6 +30,11 @@ export const createNewOrder = async (newOrder) => {
       }
       item.price = updatedFlower.price;
     }
+
+    newOrder.orderTotal = newOrder.order.reduce(
+      (sum, itm) => sum + itm.count * itm.price,
+      0,
+    );
 
     const confirmOrder = await OrdersColection.create([newOrder], { session });
 
